@@ -4,9 +4,7 @@
 **Author:** Evelyn Caro
 **Status:** ✅ Built and working
 
-**Naming note:** The code file is `Ship3_IBM_Granite_RAG_v1.ipynb`. It began as a copy of the 
-Ship 2 IBM Granite notebook and was adapted for a different purpose. The internal header 
-and filename have been corrected to reflect Ship 3. The folder has always been correct.
+**Naming note:** The runnable file is `Ship3_IBM_Granite_RAG_demo.py`. The notebook `Ship3_IBM_Granite_RAG_v1.ipynb` is preserved as the source of record. Both run the same pipeline. Ship 3 began as a copy of the Ship 2 IBM Granite notebook and was adapted for a different purpose — proving the pattern could cross platforms.
 
 ---
 
