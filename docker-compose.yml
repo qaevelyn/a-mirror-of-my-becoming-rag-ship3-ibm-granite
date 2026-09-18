@@ -1,0 +1,21 @@
+# ============================================================
+# ship3-ibm-granite-rag — docker-compose.yml
+# Copyright (c) 2026 Evelyn Caro. All rights reserved.
+# ============================================================
+# Usage:
+#   docker compose up --build
+#
+# Requires Ollama running on the host machine with the granite4.1:3b model pulled.
+# ============================================================
+
+services:
+  ship3-ibm-granite-rag:
+    build: .
+    image: ship3-ibm-granite-rag:latest
+    container_name: ship3-ibm-granite-rag
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      - OLLAMA_HOST=http://host.docker.internal:11434
+    volumes:
+      - ./chroma_db:/app/chroma_db
