@@ -1,4 +1,4 @@
-# Ship 3: IBM Granite RAG Pipeline
+# ship3 of the A Mirror of My Becoming fleet — Ship 3: IBM Granite RAG Pipeline
 
 **Built:** August 2026
 **Author:** Evelyn Caro
