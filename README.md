@@ -1,68 +1,90 @@
-# ship3 of the A Mirror of My Becoming fleet — Ship 3: IBM Granite RAG Pipeline
+# Ship 3 — IBM Granite Standard RAG Pipeline — Local
 
-**Built:** August 2026
+**The ship that proved the pattern was portable — without ever touching the cloud it was never going to use.**
+
+Ship 3 of A Mirror of My Becoming™. Built August–September 2026 on an 8 GB Intel MacBook Air. Runs fully local: IBM Granite 4.1 (3B) as the LLM and nomic-embed-text for embeddings, both served through Ollama. No cloud account, no API key, no data leaving the machine.
+
 **Author:** Evelyn Caro
-**Status:** ✅ Built and working
-
-**Naming note:** The runnable file is `Ship3_IBM_Granite_RAG_demo.py`. The notebook `Ship3_IBM_Granite_RAG_v1.ipynb` is preserved as the source of record. Both run the same pipeline. Ship 3 began as a copy of the Ship 2 IBM Granite notebook and was adapted for a different purpose — proving the pattern could cross platforms.
 
 ---
 
-## Origin
+## What it does
 
-The third ship proved the pattern could cross platforms.
+Standard RAG, end to end, in one script:
 
-If the architecture only worked on one vendor's model, it wasn't sovereign. Ship 3 ran 
-the same RAG pattern on IBM Granite — a different LLM, a different vendor, the same 
-local-first philosophy. This is where "sovereign" stopped being a slogan and started 
-being a design constraint.
+1. Loads documents (`data/CURATED_PUBLIC_DATA.md` — deliberately public data, which is why this repo can be public)
+2. Chunks them — 500 characters, 50 overlap
+3. Embeds every chunk locally through nomic-embed-text
+4. Persists chunks + embeddings into a local Chroma vector store (`./chroma_db`)
+5. Answers questions by retrieving the top relevant chunks and passing them to Granite 4.1 for generation
 
----
-
-## What It Does
-
-A Retrieval-Augmented Generation (RAG) pipeline built on IBM Granite, demonstrating 
-cross-platform AI capabilities.
+First run builds the store. Every run after that loads it. Docker and docker-compose files are included for the same behavior in a container.
 
 ---
 
-## Architecture
+## Why it exists
 
-- **Runtime:** Local, sovereign execution
-- **Model:** IBM Granite
-- **Pipeline:** RAG
-- **Data source:** Local files — the Mirror personal archive
-- **Storage:** Vector database
-- **Cloud dependency:** None (current)
+Ship 1 ran on AWS and was lost to AWS. Ship 3 asked the next question: **whose model?** DeepSeek 1.5B runs through Ollama, but the fleet needed a second model to prove the pattern wasn't locked to one. IBM Granite 4.1 (3B) is small enough to run on consumer hardware and open enough to run anywhere. The answer: swap the model, keep the pattern, prove it end to end — locally. Ship 3 is the receipt that the RAG pattern was never locked to a vendor — model or platform.
 
 ---
 
-## Pipeline
+## Requirements
 
-1. Read local documents from the Mirror archive
-2. Chunk into pieces
-3. Vectorize (embed) each chunk
-4. Store vectors in a vector database
-5. Query at runtime → retrieve relevant chunks → generate answer
+- Python 3 with: `langchain`, `langchain-community`, `langchain-text-splitters`, `langchain-ollama`, `langchain-chroma`
+- [Ollama](https://ollama.com) running locally, with `granite4.1:3b` and `nomic-embed-text` pulled
+- `data/CURATED_PUBLIC_DATA.md` — your own corpus, in one markdown file
 
 ---
 
-## Integration
+## Quickstart
 
-- Reads local data — the Mirror personal archive
-- Chunks, vectorizes, stores in vector DB
-- Queries the DB at runtime for retrieval-augmented answers
-- **No cloud dependency.** Local-first. Sovereign.
-- Demonstrates the pattern working on a second LLM vendor.
+1. Install the packages named at the top of Ship3_IBM_Granite_RAG_demo.py
+2. Pull the models: ollama pull granite4.1:3b && ollama pull nomic-embed-text
+3. Put your corpus in data/CURATED_PUBLIC_DATA.md
+4. Run: python3 Ship3_IBM_Granite_RAG_demo.py
+First run builds the store. Every run after loads it.
+text
+
 
 ---
 
-## Access and Copyright
 
-This work was created by Evelyn Caro. DeepSeek is the only collaborator — used as a tool 
-in the creative and technical process.
+---
 
-This is a personal portfolio project and is not open for collaboration or external access. 
-The video and documentation speak for themselves.
+## The fleet
 
-Copyright © 2026 Evelyn Caro. All rights reserved. Copyright registration is pending.
+- **[Ship 1](https://github.com/qaevelyn/a-mirror-of-my-becoming-rag-ship1-deepseek-rag-local)** — DeepSeek RAG, rebuilt local after AWS lost the original
+- **[Ship 2](https://github.com/qaevelyn/a-mirror-of-my-becoming-rag-ship2-ibm-granite-agentic)** — IBM Granite Agentic RAG
+- **[Ship 3](https://github.com/qaevelyn/a-mirror-of-my-becoming-rag-ship3-ibm-granite)** — IBM Granite Standard RAG
+- **[Ship 4](https://github.com/qaevelyn/a-mirror-of-my-becoming-rag-ship4-ibm-granite-agentic)** — IBM Granite Agentic RAG
+- **[Ship 5](https://github.com/qaevelyn/a-mirror-of-my-becoming-rag-ship5-ibm-granite-agentic-evidenceflow)** — IBM Granite Agentic RAG with EvidenceFlow
+
+**[Suite: Ingestion Tools](https://github.com/qaevelyn/a-mirror-of-my-becoming-suite-ingestion-tools)** — the tooling that gets documents into the vector stores these ships read from.
+
+**[A Mirror of My Becoming™](https://github.com/qaevelyn/a-mirror-of-my-becoming)** — the parent index for the entire practice.
+
+**[Fleet index + SETUP.md](https://github.com/qaevelyn/a-mirror-of-my-becoming-rag-pipelines)** — how to point any ship at your own corpus.
+
+---
+
+
+## License
+
+Dual-licensed:
+
+- **AGPL-3.0** — free to use, modify, and redistribute under the terms of the license. Full text in [LICENSE](LICENSE).
+- **Commercial license** — available for organizations that need to use the code without the AGPL-3.0 obligations. Contact the author for pricing.
+
+Free does not mean free to exploit. If you build a product on this work, the author expects to be paid.
+
+---
+
+## Author
+
+**Evelyn Caro** — Sovereign AI Builder.
+
+**[qaevelyn.github.io](https://qaevelyn.github.io)** · Commercial licensing: **evelyn.caro.cloud@gmail.com**
+
+---
+
+© 2026 Evelyn Caro. All rights reserved.
